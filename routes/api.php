@@ -15,24 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Spin prizes
+Route::group(['prefix' => 'spin-prize'], function () {
+    Route::get('/',[SpinWheelController::class, 'list']);
+    Route::post('/',[SpinWheelController::class, 'store']);
+    Route::put('/{id}',[SpinWheelController::class, 'update']);
+    Route::delete('/{id}',[SpinWheelController::class, 'delete']);
+});
 
-Route::get('spin',[SpinWheelController::class,'getSpinWheel']);
-Route::post('spin/store',[SpinWheelController::class,'storeSpinWheel']);
-Route::post('spin/update',[SpinWheelController::class,'updateSpinWheel']);
-Route::post('spin/delete',[SpinWheelController::class,'deleteSpinWheel']);
+// Prize Winner
+Route::group(['prefix' => 'winner'], function () {
+    Route::post('store-winner',[SpinWheelController::class, 'storeWinner']);
+    Route::put('change-status/{id}',[SpinWheelController::class, 'changeStatusWinner']);
+});
 
-//Get the prize winner ID
-Route::get('winner',[SpinWheelController::class,'getWinnerId']);
+// Store user spin log
+Route::post('store-spin-log',[SpinWheelController::class, 'storeSpinLog']);
 
-// change the status winner
-Route::post('status',[SpinWheelController::class,'changeStatusWinner']);
-// store user spin log
-Route::post('spin-log',[SpinWheelController::class,'spinLog']);
+// Check available spin
+Route::post('check-spin',[SpinWheelController::class, 'checkTodaySpin']);
 
-Route::get('today-spin',[SpinWheelController::class,'checkTodaySpin']);
-
-
-
-
-
-
+// Public APIs
+Route::get('spin-prize/get-list', [SpinWheelController::class, 'getList']);

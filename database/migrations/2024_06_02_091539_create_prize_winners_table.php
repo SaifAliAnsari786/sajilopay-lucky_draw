@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prize_winners', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('prize_id');
             $table->foreign('prize_id')->references('id')->on('prizes')->onUpdate('cascade');
             $table->enum('status', ['pending', 'completed'])->default('pending');
-
             $table->timestamps();
         });
     }
