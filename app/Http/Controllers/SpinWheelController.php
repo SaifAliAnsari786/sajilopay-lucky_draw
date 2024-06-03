@@ -11,6 +11,37 @@ use Illuminate\Support\Str;
 
 class SpinWheelController extends Controller
 {
+    // List all prizes
+    /**
+     *    @OA\Info(
+     *    title="Lucky Spin API",
+     *    description="List of all api",
+     *    version="1.0.0",
+     * )
+     * @OA\Get(
+     *      path="/api/spin-prize",
+     *     tags={"Prizes"},
+     *      summary="List All Prizes",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items (
+     *                      type="object",
+     *                      @OA\Property(property="id", type="numeric", format="numeric", example="1"),
+     *                      @OA\Property(property="image", type="string", format="string", example="null"),
+     *                      @OA\Property(property="name", type="string", format="string", example="Rs 100 Top-Up"),
+     *                      @OA\Property(property="probability", type="string", format="string", example="0.00000005")
+     *                  )
+     *             )
+     *         )
+     *     )
+     *  )
+     */
     public function list()
     {
         try {
@@ -28,6 +59,67 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Edit prize
+    /**
+     * @OA\Get(
+     *      path="/api/spin-prize/{id}",
+     *      tags={"Prizes"},
+     *      summary="Edit prize detail",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="id", type="numeric", format="numeric", example="1"),
+     *             @OA\Property(property="image", type="string", format="string", example="null"),
+     *             @OA\Property(property="name", type="string", format="string", example="Rs 100 Top-Up"),
+     *             @OA\Property(property="probability", type="string", format="string", example="0.00000005")
+     *         )
+     *     )
+     *  )
+     */
+    public function edit($id)
+    {
+        try {
+            $prize = Prize::findOrFail($id);
+            $dataArray = [
+                'id' => $prize->id,
+                'image' => !empty($prize->image) ? asset('storage/prizes/' . $prize->image) : null,
+                'name' => $prize->name,
+                'probability' => $prize->probability
+            ];
+            return response()->json($dataArray, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Prize not found.'], 404);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Internal Server Error.'], 500);
+        }
+    }
+
+    // Store prize detail
+    /**
+     * @OA\Post(
+     *      path="/api/spin-prize",
+     *      tags={"Prizes"},
+     *      summary="Store prize detail",
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(
+     *            required={"name","probability","image"},
+     *            @OA\Property(property="name", type="string", format="string", example="Rs 1000"),
+     *            @OA\Property(property="probability", type="string", format="string", example="0.0000045"),
+     *            @OA\Property(property="image", type="string", format="string", example="http://localhost:8087/storage/about/rWoq4SHrej5qiIw0BMUb1711468907.jpg"),
+     *         ),
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Successfully prize detail saved."),
+     *         )
+     *     )
+     *  )
+     */
     public function store(Request $request)
     {
         try {
@@ -66,6 +158,41 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Update prize detail
+    /**
+     * @OA\Put(
+     *      path="/api/spin-prize/{id}",
+     *      tags={"Prizes"},
+     *      summary="Update prize detail",
+     *      @OA\Parameter(
+     *           name="id",
+     *           in="path",
+     *           required=true,
+     *           description="ID",
+     *           @OA\Schema(
+     *               type="integer",
+     *               format="int64",
+     *               example="2"
+     *           )
+     *      ),
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(
+     *            required={"name","probability","image"},
+     *            @OA\Property(property="name", type="string", format="string", example="Rs 1000"),
+     *            @OA\Property(property="probability", type="string", format="string", example="0.0000045"),
+     *            @OA\Property(property="image", type="string", format="string", example="http://localhost:8087/storage/about/rWoq4SHrej5qiIw0BMUb1711468907.jpg"),
+     *         ),
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Successfully prize detail updated."),
+     *         )
+     *     )
+     *  )
+     */
     public function update(Request $request, $id)
     {
         try{
@@ -111,6 +238,33 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Delete Prize
+    /**
+     * @OA\Delete(
+     *      path="/api/spin-prize/{id}",
+     *      tags={"Prizes"},
+     *      summary="Delete prize detail",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer",
+     *              format="int64",
+     *              example="2"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success response",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="message", type="string", example="Successfully prize deleted."),
+     *          )
+     *      )
+     * )
+     */
     public function delete($id)
     {
         try {
@@ -138,6 +292,29 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Store winner detail
+    /**
+     * @OA\Post(
+     *      path="/api/winner/store-winner",
+     *      tags={"Prize Winner"},
+     *      summary="Store winner detail",
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(
+     *            required={"user_id","prize_id"},
+     *            @OA\Property(property="user_id", type="numeric", format="numeric", example="1"),
+     *            @OA\Property(property="prize_id", type="numeric", format="numeric", example="3")
+     *         ),
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Successfully winner detail saved."),
+     *         )
+     *     )
+     *  )
+     */
     public function storeWinner()
     {
         try {
@@ -167,6 +344,39 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Store winner detail
+    /**
+     * @OA\Put(
+     *      path="/api/winner/change-status/{id}",
+     *      tags={"Prize Winner"},
+     *      summary="Update winner detail",
+     *      @OA\Parameter(
+     *           name="id",
+     *           description="Id",
+     *           in="path",
+     *           required=true,
+     *           @OA\Schema(
+     *               type="integer",
+     *               format="int64",
+     *               example="2"
+     *           )
+     *       ),
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(
+     *            required={"status"},
+     *            @OA\Property(property="status", type="string", format="string", example="completed")
+     *         ),
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Successfully winner status changed."),
+     *         )
+     *     )
+     *  )
+     */
     public function changeStatusWinner(Request $request, $id)
     {
         try {
@@ -200,6 +410,28 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Store spin log
+    /**
+     * @OA\Post(
+     *      path="/api/store-spin-log",
+     *      tags={"Spin Log"},
+     *      summary="Store spin log",
+     *      @OA\RequestBody(
+     *         @OA\JsonContent(
+     *            required={"user_id"},
+     *            @OA\Property(property="user_id", type="numeric", format="numeric", example="1")
+     *         ),
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Successfully spin log saved."),
+     *         )
+     *     )
+     *  )
+     */
     public function storeSpinLog(Request $request)
     {
         try {
@@ -236,6 +468,29 @@ class SpinWheelController extends Controller
         }
     }
 
+    // Check Spin Availability
+    /**
+     * @OA\Post(
+     *      path="/api/check-spin",
+     *      tags={"Spin Availability"},
+     *      summary="Check available spin for today.",
+     *      @OA\RequestBody(
+     *          @OA\JsonContent(
+     *             required={"user_id"},
+     *             @OA\Property(property="user_id", type="numeric", format="numeric", example="1")
+     *          ),
+     *       ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Successfully spin status fetched."),
+     *             @OA\Property(property="is_spin_available", type="string", example="Y"),
+     *         )
+     *     )
+     *  )
+     */
     public function checkTodaySpin(Request $request)
     {
         try {
@@ -263,6 +518,31 @@ class SpinWheelController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/api/spin-prize/get-list",
+     *     tags={"Public APIs"},
+     *      summary="List All Prizes (NOTE :- Decrypt using CryptoJS)",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items (
+     *                      type="object",
+     *                      @OA\Property(property="image", type="string", format="string", example="null"),
+     *                      @OA\Property(property="name", type="string", format="string", example="Rs 100 Top-Up"),
+     *                      @OA\Property(property="enc-key", type="string", format="string", example="4asXdDsf323dfd"),
+     *                      @OA\Property(property="probability", type="string", format="string", example="cDZZPXyWPXjLs6adYy9i6w==")
+     *                  )
+     *             )
+     *         )
+     *     )
+     *  )
+     */
     public function getList()
     {
         try {

@@ -1,0 +1,525 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Lucky Spin API",
+        "description": "List of all api",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/spin-prize": {
+            "get": {
+                "tags": [
+                    "Prizes"
+                ],
+                "summary": "List All Prizes",
+                "operationId": "bcb5b6430226e0c78e8c18b1cfbad66d",
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "numeric",
+                                                        "format": "numeric",
+                                                        "example": "1"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "null"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "Rs 100 Top-Up"
+                                                    },
+                                                    "probability": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "0.00000005"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Prizes"
+                ],
+                "summary": "Store prize detail",
+                "operationId": "e348421628feed609ac92389d34f941e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "probability",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Rs 1000"
+                                    },
+                                    "probability": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "0.0000045"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "http://localhost:8087/storage/about/rWoq4SHrej5qiIw0BMUb1711468907.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully prize detail saved."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/spin-prize/{id}": {
+            "get": {
+                "tags": [
+                    "Prizes"
+                ],
+                "summary": "Edit prize detail",
+                "operationId": "d71e69439b3639d958dbcdabee803d2f",
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "numeric",
+                                            "format": "numeric",
+                                            "example": "1"
+                                        },
+                                        "image": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "null"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Rs 100 Top-Up"
+                                        },
+                                        "probability": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "0.00000005"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Prizes"
+                ],
+                "summary": "Update prize detail",
+                "operationId": "13bdc1fc9cb6f9d83ea61af8b42e57ac",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": "2"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "probability",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Rs 1000"
+                                    },
+                                    "probability": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "0.0000045"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "http://localhost:8087/storage/about/rWoq4SHrej5qiIw0BMUb1711468907.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully prize detail updated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Prizes"
+                ],
+                "summary": "Delete prize detail",
+                "operationId": "268c32a3d3f10aa49bd51f4ee5e6dfa6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": "2"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully prize deleted."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/winner/store-winner": {
+            "post": {
+                "tags": [
+                    "Prize Winner"
+                ],
+                "summary": "Store winner detail",
+                "operationId": "a449f3d33db62bd4afa70b8a5d170872",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id",
+                                    "prize_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "numeric",
+                                        "format": "numeric",
+                                        "example": "1"
+                                    },
+                                    "prize_id": {
+                                        "type": "numeric",
+                                        "format": "numeric",
+                                        "example": "3"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully winner detail saved."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/winner/change-status/{id}": {
+            "put": {
+                "tags": [
+                    "Prize Winner"
+                ],
+                "summary": "Update winner detail",
+                "operationId": "aed4906dba5e16e155e85a5a67cef211",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": "2"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "completed"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully winner status changed."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/store-spin-log": {
+            "post": {
+                "tags": [
+                    "Spin Log"
+                ],
+                "summary": "Store spin log",
+                "operationId": "fbebcae682e1605ab56528117d56522a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "numeric",
+                                        "format": "numeric",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully spin log saved."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/check-spin": {
+            "post": {
+                "tags": [
+                    "Spin Availability"
+                ],
+                "summary": "Check available spin for today.",
+                "operationId": "8104dbec1fb2754d908d272d818e7967",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "type": "numeric",
+                                        "format": "numeric",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully spin status fetched."
+                                        },
+                                        "is_spin_available": {
+                                            "type": "string",
+                                            "example": "Y"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/spin-prize/get-list": {
+            "get": {
+                "tags": [
+                    "Public APIs"
+                ],
+                "summary": "List All Prizes (NOTE :- Decrypt using CryptoJS)",
+                "operationId": "0035e8031a2dcedd26dcb49818a98ee8",
+                "responses": {
+                    "200": {
+                        "description": "Success response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "image": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "null"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "Rs 100 Top-Up"
+                                                    },
+                                                    "enc-key": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "4asXdDsf323dfd"
+                                                    },
+                                                    "probability": {
+                                                        "type": "string",
+                                                        "format": "string",
+                                                        "example": "cDZZPXyWPXjLs6adYy9i6w=="
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

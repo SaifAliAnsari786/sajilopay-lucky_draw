@@ -20,6 +20,7 @@ Route::group(['prefix' => 'spin-prize'], function () {
     Route::get('/',[SpinWheelController::class, 'list']);
     Route::post('/',[SpinWheelController::class, 'store']);
     Route::put('/{id}',[SpinWheelController::class, 'update']);
+    Route::get('/{id}',[SpinWheelController::class, 'edit']);
     Route::delete('/{id}',[SpinWheelController::class, 'delete']);
 });
 
